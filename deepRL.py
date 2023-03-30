@@ -120,7 +120,7 @@ class StockEnvTrade(gym.Env):
                                             days[i+40] + days[i+48] + days[i+56] + days[i+64] + days[i+72] +
                                             days[i+80] + days[i+88] + days[i+96] + days[i+104] + days[i+112] +
                                             days[i+120] + days[i+128] + days[i+136] + days[i+144] + days[i+152] +
-                                            days[i+160] + days[i+168] + days[i+176] + days[i+184] + data_next_day[i]) / 30
+                                            days[i+160] + days[i+168] + days[i+176] + days[i+184] + data_next_day[i]) / 25
                 else:
                     data_mean_25_days[i] = data_next_day[i]
 
