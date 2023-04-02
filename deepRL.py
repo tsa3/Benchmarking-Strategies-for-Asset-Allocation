@@ -100,7 +100,7 @@ class StockEnvTrade(gym.Env):
 
             days = []
             relative_day = self.day
-            for day in range(19):
+            for day in range(14):
                 if self.day -1 >= 0:
                     relative_data = self.df.iloc[relative_day,:]
                     days.append(relative_data.tolist())
@@ -113,18 +113,17 @@ class StockEnvTrade(gym.Env):
 
             data_next_day = self.data.tolist()
 
-            data_mean_20_days = [0]*self.stock_dim
+            data_mean_15_days = [0]*self.stock_dim
             for i in range(self.stock_dim):
-                if(len(days) == 152):
-                    data_mean_20_days[i] = (days[i] + days[i+8] + days[i+16] + days[i+24] + days[i+32] +
+                if(len(days) == 112):
+                    data_mean_15_days[i] = (days[i] + days[i+8] + days[i+16] + days[i+24] + days[i+32] +
                                             days[i+40] + days[i+48] + days[i+56] + days[i+64] + days[i+72] +
-                                            days[i+80] + days[i+88] + days[i+96] + days[i+104] + days[i+112] +
-                                            days[i+120] + days[i+128] + days[i+136] + days[i+144] + data_next_day[i]) / 20
+                                            days[i+80] + days[i+88] + days[i+96] + days[i+104] + data_next_day[i]) / 15
                 else:
-                    data_mean_20_days[i] = data_next_day[i]
+                    data_mean_15_days[i] = data_next_day[i]
 
             #load next state i.e. the new value of the stocks
-            self.state =  [self.state[0]] + data_mean_20_days + \
+            self.state =  [self.state[0]] + data_mean_15_days + \
                             list(self.state[(self.stock_dim+1):(self.stock_dim*2+1)])
 
             end_total_asset = self.state[0] + \
