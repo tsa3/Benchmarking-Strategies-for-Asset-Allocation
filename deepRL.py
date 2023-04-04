@@ -116,13 +116,7 @@ class StockEnvTrade(gym.Env):
             data_mean_5_days = [0]*self.stock_dim
             for i in range(self.stock_dim):
                 if(len(days) == 32):
-                    data_mean_5_days[i] = (days[i] + days[i+8] + days[i+16] + days[i+24] + data_next_day[i])/5
-                elif(len(days) == 24):
-                    data_mean_5_days[i] = (days[i] + days[i+8] + days[i+16] + data_next_day[i])/4
-                elif(len(days) == 16):
-                    data_mean_5_days[i] = (days[i] + days[i+8] + data_next_day[i])/3
-                elif(len(days) == 8):
-                    data_mean_5_days[i] = (days[i] + data_next_day[i])/2
+                    data_mean_5_days[i] = (days[i] + days[i+8] + days[i+16] + days[i+24] + data_next_day[i]) / 5
                 else:
                     data_mean_5_days[i] = data_next_day[i]
 
