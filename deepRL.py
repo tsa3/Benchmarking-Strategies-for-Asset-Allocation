@@ -98,11 +98,30 @@ class StockEnvTrade(gym.Env):
             for index in buy_index:
                 self._buy_stock(index, actions[index])
 
+            days = []
+            relative_day = self.day
+            for day in range(4):
+                if self.day -1 >= 0:
+                    relative_data = self.df.iloc[relative_day,:]
+                    days.append(relative_data.tolist())
+                    relative_day = self.day - 1
+                else:
+                    pass
+
             self.day += 1
             self.data = self.df.iloc[self.day,:]
 
+            data_next_day = self.data.tolist()
+
+            data_mean_5_days = [0]*self.stock_dim
+            for i in range(self.stock_dim):
+                if(len(days) == 32):
+                    data_mean_5_days[i] = (days[i] + days[i+8] + days[i+16] + days[i+24] + data_next_day[i]) / 5
+                else:
+                    data_mean_5_days[i] = data_next_day[i]
+
             #load next state i.e. the new value of the stocks
-            self.state =  [self.state[0]] + self.data.values.tolist() + \
+            self.state =  [self.state[0]] + data_mean_5_days + \
                             list(self.state[(self.stock_dim+1):(self.stock_dim*2+1)])
 
             end_total_asset = self.state[0] + \
